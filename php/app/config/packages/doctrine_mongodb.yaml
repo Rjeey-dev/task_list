@@ -1,0 +1,23 @@
+doctrine_mongodb:
+    auto_generate_proxy_classes: true
+    auto_generate_hydrator_classes: true
+    connections:
+        default:
+            server: '%env(resolve:MONGODB_URL)%'
+
+    default_database: '%env(resolve:MONGODB_DB)%'
+    document_managers:
+        default:
+            auto_mapping: true
+            mappings:
+                todos:
+                    is_bundle: false
+                    type: annotation
+                    dir: '%kernel.project_dir%/src/User/Domain/Entity'
+                    prefix: App\User\Domain\Entity
+                    alias: Notifications
+                todos_vo:
+                    type: annotation
+                    dir: "%kernel.project_dir%/src/User/Domain/ValueObject"
+                    prefix: App\User\Domain\ValueObject
+                    is_bundle: false

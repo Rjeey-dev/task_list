@@ -1,0 +1,35 @@
+version: "3"
+
+services:
+    php_service:
+        build:
+            context: .
+            dockerfile: ./php/Dockerfile
+        volumes:
+            - ./php/app:/var/www/app:cached
+            - ./php/logs/:/var/www/log
+        environment:
+            PHP_IDE_CONFIG: serverName=todo
+            XDEBUG_CONFIG: "remote_host=192.168.100.4 remote_port=9004"
+
+    nginx_service:
+        build:
+            context: ./nginx
+        volumes:
+            - ./nginx/logs/:/var/log/nginx
+            - ./php/app:/var/www/app:cached
+        ports:
+            - "82:80"
+        environment:
+            APP_HOST: user.todo
+
+    mongodb_service:
+        image: mongo:latest
+        environment:
+            - MONGO_DATA_DIR=/data/db
+        volumes:
+            - ./mongodb/data/db:/data/db
+        ports:
+            - 27017:27017
+        command:
+            - mongod
