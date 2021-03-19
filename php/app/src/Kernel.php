@@ -3,6 +3,7 @@
 namespace App;
 
 use App\Task\Infrastructure\Persistence\Doctrine\ODM\Types\TaskIdType;
+use App\Comments\Infrastructure\Persistence\Doctrine\ODM\Types\CommentIdType;
 use Doctrine\ODM\MongoDB\Types\Type;
 use NinjaBuggs\ServiceBus\Command\UseCaseInterface;
 use NinjaBuggs\ServiceBus\Event\EventUseCaseInterface;
@@ -30,7 +31,7 @@ class Kernel extends BaseKernel
             (require $path)($container->withPath($path), $this);
         }
 
-
+        Type::registerType('user:comment_id', CommentIdType::class);
         Type::registerType('user:user_id', TaskIdType::class);
     }
 

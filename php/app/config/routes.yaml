@@ -1,2 +1,5 @@
-tasks:
+comments:
+    resource: '../src/Comments/Presentation/Resources/config/routes/annotations.yaml'
+
+task:
     resource: '../src/Task/Presentation/Resources/config/routes/annotations.yaml'

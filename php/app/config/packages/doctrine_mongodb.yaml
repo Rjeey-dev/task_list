@@ -10,14 +10,24 @@ doctrine_mongodb:
         default:
             auto_mapping: true
             mappings:
-                todos:
+                comments:
+                    is_bundle: false
+                    type: annotation
+                    dir: '%kernel.project_dir%/src/Comments/Domain/Entity'
+                    prefix: App\Comments\Domain\Entity
+                comments_vo:
+                    type: annotation
+                    dir: "%kernel.project_dir%/src/Comments/Domain/ValueObject"
+                    prefix: App\Comments\Domain\ValueObject
+                    is_bundle: false
+                tasks:
                     is_bundle: false
                     type: annotation
                     dir: '%kernel.project_dir%/src/Task/Domain/Entity'
                     prefix: App\Task\Domain\Entity
-                    alias: Notifications
-                todos_vo:
+                tasks_vo:
                     type: annotation
                     dir: "%kernel.project_dir%/src/Task/Domain/ValueObject"
                     prefix: App\Task\Domain\ValueObject
                     is_bundle: false
+

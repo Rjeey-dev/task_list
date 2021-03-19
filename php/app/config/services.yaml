@@ -9,6 +9,8 @@ parameters:
 
 imports:
     - { resource: '../src/Task/Presentation/Resources/config/services.yml' }
+    - { resource: '../src/Comments/Presentation/Resources/config/services.yml' }
+
 
 services:
     # default configuration for services in *this* file
@@ -22,6 +24,13 @@ services:
     App\:
         resource: '../src/*'
         exclude:
+            - '../src/{DependencyInjection,Entity,Migrations,Tests,Kernel.php}'
+            - '../src/Comments/Application/Query'
+            - '../src/Comments/Application/Command'
+            - '../src/Comments/Domain/ValueObject'
+            - '../src/Comments/Domain/DTO'
+            - '../src/Comments/Domain/Event'
+            - '../src/Comments/Domain/Entity'
             - '../src/{DependencyInjection,Entity,Migrations,Tests,Kernel.php}'
             - '../src/Task/Application/Query'
             - '../src/Task/Application/Command'

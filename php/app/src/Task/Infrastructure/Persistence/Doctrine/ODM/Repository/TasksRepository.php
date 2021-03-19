@@ -14,7 +14,7 @@ class TasksRepository extends DocumentRepository implements TasksRepositoryInter
     /**
      * {@inheritDoc}
      */
-    public function add(Task $user): void
+    public function add(Task$user): void
     {
         $this->getDocumentManager()->persist($user);
     }
@@ -36,7 +36,7 @@ class TasksRepository extends DocumentRepository implements TasksRepositoryInter
     /**
      * {@inheritDoc}
      */
-    public function remove(Task $user): void
+    public function remove(Task$user): void
     {
         $this->getDocumentManager()->remove($user);
     }
