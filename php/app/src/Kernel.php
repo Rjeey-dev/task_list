@@ -2,7 +2,7 @@
 
 namespace App;
 
-use App\User\Infrastructure\Persistence\Doctrine\ODM\Types\UserIdType;
+use App\Task\Infrastructure\Persistence\Doctrine\ODM\Types\TaskIdType;
 use Doctrine\ODM\MongoDB\Types\Type;
 use NinjaBuggs\ServiceBus\Command\UseCaseInterface;
 use NinjaBuggs\ServiceBus\Event\EventUseCaseInterface;
@@ -31,7 +31,7 @@ class Kernel extends BaseKernel
         }
 
 
-        Type::registerType('user:user_id', UserIdType::class);
+        Type::registerType('user:user_id', TaskIdType::class);
     }
 
     protected function configureRoutes(RoutingConfigurator $routes): void

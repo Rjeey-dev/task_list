@@ -1,2 +1,2 @@
-users:
-    resource: '../src/User/Presentation/Resources/config/routes/annotations.yaml'
+tasks:
+    resource: '../src/Task/Presentation/Resources/config/routes/annotations.yaml'

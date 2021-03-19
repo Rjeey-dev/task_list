@@ -21,7 +21,7 @@ services:
         ports:
             - "82:80"
         environment:
-            APP_HOST: user.todo
+            APP_HOST: task_list
 
     mongodb_service:
         image: mongo:latest
