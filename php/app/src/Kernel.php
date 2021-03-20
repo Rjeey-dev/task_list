@@ -2,7 +2,8 @@
 
 namespace App;
 
-use App\Task\Infrastructure\Persistence\Doctrine\ODM\Types\TaskIdType;
+use App\Tasks\Infrastructure\Persistence\Doctrine\ODM\Types\TaskIdType;
+use App\Comments\Infrastructure\Persistence\Doctrine\ODM\Types\CommentIdType;
 use Doctrine\ODM\MongoDB\Types\Type;
 use NinjaBuggs\ServiceBus\Command\UseCaseInterface;
 use NinjaBuggs\ServiceBus\Event\EventUseCaseInterface;
@@ -30,8 +31,8 @@ class Kernel extends BaseKernel
             (require $path)($container->withPath($path), $this);
         }
 
-
-        Type::registerType('user:user_id', TaskIdType::class);
+        Type::registerType('comment:comment_id', CommentIdType::class);
+        Type::registerType('task:task_id', TaskIdType::class);
     }
 
     protected function configureRoutes(RoutingConfigurator $routes): void
