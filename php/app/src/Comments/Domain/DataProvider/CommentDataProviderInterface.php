@@ -13,6 +13,6 @@ interface CommentDataProviderInterface
     /**
      * @throws CommentNotFoundException
      */
-    public function findUser(CommentId $id): Comment;
-    public function findUsers(int $offset, int $limit, string $order): CommentsList;
+    public function findComment(CommentId $id): Comment;
+    public function findComments(int $offset, int $limit, string $order): CommentsList;
 }

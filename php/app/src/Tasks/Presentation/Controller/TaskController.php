@@ -1,41 +1,41 @@
 <?php
 declare(strict_types=1);
 
-namespace App\Comments\Presentation\Controller;
+namespace App\Tasks\Presentation\Controller;
 
 use App\Kernel\Api\Controller\ApiController;
 use App\Kernel\Api\Response\ApiResponse;
-use App\Comments\Application\Command\CreateCommentCommand;
-use App\Comments\Application\Command\UpdateCommentCommand;
-use App\Comments\Application\Command\DeleteCommentCommand;
-use App\Comments\Application\Query\FindCommentByIdQuery;
-use App\Comments\Application\Query\FindCommentsQuery;
-use App\Comments\Domain\DTO\CommentsList;
-use App\Comments\Domain\Exception\ValidationException;
+use App\Tasks\Application\Command\CreateTaskCommand;
+use App\Tasks\Application\Command\UpdateTaskCommand;
+use App\Tasks\Application\Command\DeleteTaskCommand;
+use App\Tasks\Application\Query\FindTaskByIdQuery;
+use App\Tasks\Application\Query\FindTasksQuery;
+use App\Tasks\Domain\DTO\TasksList;
+use App\Tasks\Domain\Exception\ValidationException;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Doctrine\ODM\MongoDB\Mapping\Annotations as MongoDB;
 
-class CommentController extends ApiController
+class TaskController extends ApiController
 {
     /**
-     * @Route("/comments", name="comments", methods={"GET"})
+     * @Route("/tasks", name="tasks", methods={"GET"})
      */
     public function list(Request $request): Response
     {
         try {
-            /** @var CommentsList $commentsList */
-            $commentsList = $this->queryBus->handle(new FindCommentsQuery(
+            /** @var TasksList $tasksList */
+            $tasksList = $this->queryBus->handle(new FindTasksQuery(
                 $request->query->get('offset') !== null ? (int)$request->query->get('offset') : null,
                 $request->query->get('limit') !== null ? (int)$request->query->get('limit') : null,
                 $request->query->get('order') !== null ? (string)$request->query->get('order') : null
             ));
 
             return $this->buildSerializedListResponse(
-                $commentsList->getComments(),
-                $commentsList->getTotalCount(),
-                ['users-list']
+                $tasksList->getTasks(),
+                $tasksList->getTotalCount(),
+                ['tasks-list']
             );
         } catch (ValidationException $e) {
             return $this->buildFailResponse(ApiResponse::ERROR_VALIDATION_FAILED);
@@ -45,38 +45,39 @@ class CommentController extends ApiController
     }
 
     /**
-     * @Route ("/comments", name="create_comment", methods={"POST"})
+     * @Route ("/tasks", name="create_user", methods={"POST"})
      */
     public function create(Request $request): Response
     {
         try {
             $data = json_decode($request->getContent(), true);
 
-            $command = new CreateCommentCommand(
-                (string)$data['text'],
-                (string)$data['comment']
+            $command = new CreateTaskCommand(
+                (string)$data['todo'],
+                (string)$data['doing'],
+                (string)$data['done'],
             );
 
             $this->commandBus->handle($command);
 
             return $this->buildSerializedResponse(
-                $this->queryBus->handle(new FindCommentByIdQuery($command->getId()->getId())),
-                ['comment-detail']
+                $this->queryBus->handle(new FindTaskByIdQuery($command->getId()->getId())),
+                ['task-detail']
             );
         } catch (ValidationException $e) {
             return $this->buildFailResponse(ApiResponse::ERROR_VALIDATION_FAILED);
         } catch (\Throwable $e) {
-            return $this->buildFailResponse($e->getMessage());
+                return $this->buildFailResponse($e->getMessage());
         }
     }
 
     /**
-     * @Route("/comments/{id}", name="comments_delete", methods={"DELETE"})
+     * @Route("/tasks/{id}", name="task_delete", methods={"DELETE"})
      */
     public function delete(string $id): Response
     {
         try {
-            $command = new DeleteCommentCommand($id);
+            $command = new DeleteTaskCommand($id);
 
             $this->commandBus->handle($command);
 
@@ -87,20 +88,20 @@ class CommentController extends ApiController
     }
 
     /**
-     * @Route("/comments/{id}", name="comments_update", methods={"PATCH"})
+     * @Route("/tasks/{id}", name="task_update", methods={"PATCH"})
      */
     public function update(Request $request, string $id): Response
     {
         try {
             $data = json_decode($request->getContent(), true);
 
-            $command = new UpdateCommentCommand($id, (string) $data['text'], (string) $data['comment']);
+            $command = new UpdateTaskCommand($id, (string) $data['todo'], (string) $data['doing'], $data['done']);
 
             $this->commandBus->handle($command);
 
             return $this->buildSerializedResponse(
-                $this->queryBus->handle(new FindCommentByIdQuery($id)),
-                ['comment-detail']
+                $this->queryBus->handle(new FindTaskByIdQuery($id)),
+                ['task-detail']
             );
         } catch (ValidationException $e) {
             return $this->buildFailResponse(ApiResponse::ERROR_VALIDATION_FAILED);

@@ -11,28 +11,28 @@ class Comment
      * @Serializer\SerializedName("id")
      * @Serializer\Type("string")
      * @Serializer\Groups({
-     *     "users-list",
-     *     "user-detail",
+     *     "comments-list",
+     *     "comment-detail",
      * })
      */
     public $id;
 
     /**
-     * @Serializer\SerializedName("username")
+     * @Serializer\SerializedName("comment")
      * @Serializer\Type("string")
      * @Serializer\Groups({
-     *     "users-list",
-     *     "user-detail",
+     *     "comments-list",
+     *     "comment-detail",
      * })
      */
-    public $userName;
+    public $comment;
 
     /**
      * @Serializer\SerializedName("text")
      * @Serializer\Type("string")
      * @Serializer\Groups({
-     *     "users-list",
-     *     "user-detail",
+     *     "comments-list",
+     *     "comment-detail",
      * })
      */
     public $text;
@@ -41,16 +41,16 @@ class Comment
      * @Serializer\SerializedName("created")
      * @Serializer\Type("DateTimeImmutable")
      * @Serializer\Groups({
-     *     "users-list",
-     *     "user-detail",
+     *     "comments-list",
+     *     "comment-detail",
      * })
      */
     public $created;
 
-    public function __construct(string $id, string $userName, string $text, \DateTimeImmutable $created)
+    public function __construct(string $id, string $comment, string $text, \DateTimeImmutable $created)
     {
         $this->id = $id;
-        $this->userName = $userName;
+        $this->comment = $comment;
         $this->text = $text;
         $this->created = $created;
     }

@@ -10,15 +10,15 @@ use NinjaBuggs\ServiceBus\Query\QueryUseCaseInterface;
 
 class FindCommentsQueryHandler implements QueryUseCaseInterface
 {
-    private $userDataProvider;
+    private $commentsDataProvider;
 
-    public function __construct(CommentDataProviderInterface $usersDataProvider)
+    public function __construct(CommentDataProviderInterface $commentsDataProvider)
     {
-        $this->userDataProvider = $usersDataProvider;
+        $this->commentsDataProvider = $commentsDataProvider;
     }
 
     public function __invoke(FindCommentsQuery $query): CommentsList
     {
-        return $this->userDataProvider->findUsers($query->getOffset(), $query->getLimit(), $query->getOrder());
+        return $this->commentsDataProvider->findComments($query->getOffset(), $query->getLimit(), $query->getOrder());
     }
 }

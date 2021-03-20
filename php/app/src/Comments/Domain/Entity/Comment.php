@@ -19,14 +19,14 @@ class Comment implements EventRecordableInterface
     use EventRecordableTrait;
 
     /**
-     * @MongoDB\Id(strategy="NONE", type="user:user_id")
+     * @MongoDB\Id(strategy="NONE", type="comment:comment_id")
      */
     private $id;
 
     /**
-     * @MongoDB\Field(name="user_name", type="string")
+     * @MongoDB\Field(name="comment", type="string")
      */
-    private $userName;
+    private $comment;
 
     /**
      * @MongoDB\Field(type="string")
@@ -38,28 +38,28 @@ class Comment implements EventRecordableInterface
      */
     private $created;
 
-    public function __construct(CommentId $id, string $userName, string $text)
+    public function __construct(CommentId $id, string $comment, string $text)
     {
         $this->id = $id;
-        $this->userName = $userName;
+        $this->comment = $comment;
         $this->text = $text;
         $this->created = new \DateTimeImmutable();
 
         $this->recordEvent(new CommentHasBeenCreatedEvent(
             $id->getId(),
-            $userName,
+            $comment,
             $text
         ));
     }
 
-    public function update(string $text, string $userName): void
+    public function update(string $text, string $comment): void
     {
-        $this->userName = $userName;
+        $this->comment = $comment;
         $this->text = $text;
 
         $this->recordEvent(new CommentHasBeenUpdateEvent(
             $this->id->getId(),
-            $userName,
+            $comment,
             $text
         ));
     }
@@ -68,7 +68,7 @@ class Comment implements EventRecordableInterface
     {
         $this->recordEvent(new CommentHasBeenDeletedEvent(
             $this->id->getId(),
-            $this->userName,
+            $this->comment,
             $this->text
         ));
     }

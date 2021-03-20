@@ -7,31 +7,31 @@ use App\Kernel\Doctrine\DocumentRepository;
 use App\Comments\Domain\DataProvider\CommentDataProviderInterface;
 use App\Comments\Domain\DTO\Comment;
 use App\Comments\Domain\DTO\CommentsList;
-use App\Comments\Domain\Entity\Comment as  TaskEntity;
+use App\Comments\Domain\Entity\Comment as  CommentEntity;
 use App\Comments\Domain\Exception\CommentNotFoundException;
 use App\Comments\Domain\ValueObject\CommentId;
 
 class CommentDataProvider extends DocumentRepository implements CommentDataProviderInterface
 {
-    public function findUser(CommentId $id): Comment
+    public function findComment(CommentId $id): Comment
     {
-        $query = $this->getDocumentManager()->createQueryBuilder(TaskEntity::class)
+        $query = $this->getDocumentManager()->createQueryBuilder(CommentEntity::class)
             ->field('id')->equals($id->getId())
             ->hydrate(false)
             ->getQuery();
 
-        if (!$user = $query->getSingleResult()) {
+        if (!$comment = $query->getSingleResult()) {
             throw new CommentNotFoundException(sprintf('Comment %s not found', $id->getId()));
         }
 
-        return $this->createUser($user);
+        return $this->createComment($comment);
     }
 
-    public function findUsers(int $offset, int $limit, string $order): CommentsList
+    public function findComments(int $offset, int $limit, string $order): CommentsList
     {
-        $usersResult =[];
+        $commentsResult =[];
 
-        $query = $this->getDocumentManager()->createQueryBuilder(TaskEntity::class);
+        $query = $this->getDocumentManager()->createQueryBuilder(CommentEntity::class);
         $query->skip($offset);
         $query->limit($limit);
         $query->sort('created', $order);
@@ -39,20 +39,20 @@ class CommentDataProvider extends DocumentRepository implements CommentDataProvi
         $query = $query->hydrate(false)
             ->getQuery();
 
-        foreach ($query->execute() as $user){
-            $usersResult[] = $this->createUser($user);
+        foreach ($query->execute() as $comment){
+            $commentsResult[] = $this->createComment($comment);
         }
 
-        return new CommentsList($usersResult, count($usersResult));
+        return new CommentsList($commentsResult, count($commentsResult));
     }
 
-    private function createUser(array $user): Comment
+    private function createComment(array $comment): Comment
     {
         return new Comment(
-            $user['_id'],
-            $user['user_name'],
-            $user['text'],
-            \DateTimeImmutable::createFromMutable($user['created']->toDateTime()),
+            $comment['_id'],
+            $comment['comment'],
+            $comment['text'],
+            \DateTimeImmutable::createFromMutable($comment['created']->toDateTime()),
         );
     }
 }

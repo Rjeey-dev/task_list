@@ -14,9 +14,9 @@ class CommentsRepository extends DocumentRepository implements CommentsRepositor
     /**
      * {@inheritDoc}
      */
-    public function add(Comment $user): void
+    public function add(Comment $comment): void
     {
-        $this->getDocumentManager()->persist($user);
+        $this->getDocumentManager()->persist($comment);
     }
 
     /**
@@ -24,20 +24,20 @@ class CommentsRepository extends DocumentRepository implements CommentsRepositor
      */
     public function get(CommentId $id): Comment
     {
-        $user = $this->getDocumentManager()->find(Comment::class, $id->getId());
+        $comment = $this->getDocumentManager()->find(Comment::class, $id->getId());
 
-        if (!$user) {
+        if (!$comment) {
             throw new CommentNotFoundException(sprintf('Comment with id - %s is not found', $id->getId()));
         }
 
-        return $user;
+        return $comment;
     }
 
     /**
      * {@inheritDoc}
      */
-    public function remove(Comment $user): void
+    public function remove(Comment $comment): void
     {
-        $this->getDocumentManager()->remove($user);
+        $this->getDocumentManager()->remove($comment);
     }
 }

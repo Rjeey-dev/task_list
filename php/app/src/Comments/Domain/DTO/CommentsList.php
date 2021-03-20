@@ -5,24 +5,24 @@ namespace App\Comments\Domain\DTO;
 
 class CommentsList
 {
-    private $users;
+    private $comment;
     private $totalCount;
 
     /**
      * @param Comment[] $routes
      */
-    public function __construct(array $users, int $totalCount)
+    public function __construct(array $comment, int $totalCount)
     {
-        $this->users = $users;
+        $this->comment = $comment;
         $this->totalCount = $totalCount;
     }
 
     /**
      * @return Comment[]
      */
-    public function getUsers(): array
+    public function getComments(): array
     {
-        return $this->users;
+        return $this->comment;
     }
 
     public function getTotalCount(): int

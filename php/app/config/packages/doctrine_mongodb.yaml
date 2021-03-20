@@ -23,11 +23,11 @@ doctrine_mongodb:
                 tasks:
                     is_bundle: false
                     type: annotation
-                    dir: '%kernel.project_dir%/src/Task/Domain/Entity'
-                    prefix: App\Task\Domain\Entity
+                    dir: '%kernel.project_dir%/src/Tasks/Domain/Entity'
+                    prefix: App\Tasks\Domain\Entity
                 tasks_vo:
                     type: annotation
-                    dir: "%kernel.project_dir%/src/Task/Domain/ValueObject"
-                    prefix: App\Task\Domain\ValueObject
+                    dir: "%kernel.project_dir%/src/Tasks/Domain/ValueObject"
+                    prefix: App\Tasks\Domain\ValueObject
                     is_bundle: false
 

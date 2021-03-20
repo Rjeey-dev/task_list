@@ -11,17 +11,17 @@ use NinjaBuggs\ServiceBus\Query\QueryUseCaseInterface;
 
 class FindCommentByIdQueryHandler implements QueryUseCaseInterface
 {
-    private $usersDataProvider;
+    private $commentsDataProvider;
 
-    public function __construct(CommentDataProviderInterface $usersDataProvider)
+    public function __construct(CommentDataProviderInterface $commentsDataProvider)
     {
-        $this->usersDataProvider = $usersDataProvider;
+        $this->commentsDataProvider = $commentsDataProvider;
     }
 
     public function __invoke(FindCommentByIdQuery $query): ?Comment
     {
         try {
-            return $this->usersDataProvider->findUser($query->getId());
+            return $this->commentsDataProvider->findComment($query->getId());
         } catch (CommentNotFoundException $e) {
             return null;
         }

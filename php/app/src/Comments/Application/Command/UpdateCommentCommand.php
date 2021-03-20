@@ -1,11 +1,12 @@
 <?php
 declare(strict_types=1);
 
-namespace App\Comments\Domain\Event;
+namespace App\Comments\Application\Command;
 
-use NinjaBuggs\ServiceBus\Event\EventInterface;
+use App\Comments\Domain\ValueObject\CommentId;
+use NinjaBuggs\ServiceBus\Command\CommandInterface;
 
-class CommentHasBeenDeletedEvent implements EventInterface
+class UpdateCommentCommand implements CommandInterface
 {
     private $id;
     private $comment;
@@ -13,12 +14,12 @@ class CommentHasBeenDeletedEvent implements EventInterface
 
     public function __construct(string $id, string $comment, string $text)
     {
-        $this->id = $id;
-        $this->comment = $comment;
+        $this->id = new CommentId($id);
         $this->text = $text;
+        $this->comment = $comment;
     }
 
-    public function getId(): string
+    public function getId(): CommentId
     {
         return $this->id;
     }
