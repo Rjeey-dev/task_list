@@ -24,9 +24,9 @@ class Comment implements EventRecordableInterface
     private $id;
 
     /**
-     * @MongoDB\Field(name="comment", type="string")
+     * @MongoDB\Field(name="task_id", type="string")
      */
-    private $comment;
+    private $taskId;
 
     /**
      * @MongoDB\Field(type="string")
@@ -38,28 +38,28 @@ class Comment implements EventRecordableInterface
      */
     private $created;
 
-    public function __construct(CommentId $id, string $comment, string $text)
+    public function __construct(CommentId $id, string $taskId, string $text)
     {
         $this->id = $id;
-        $this->comment = $comment;
+        $this->taskId = $taskId;
         $this->text = $text;
         $this->created = new \DateTimeImmutable();
 
         $this->recordEvent(new CommentHasBeenCreatedEvent(
             $id->getId(),
-            $comment,
+            $taskId,
             $text
         ));
     }
 
-    public function update(string $text, string $comment): void
+    public function update(string $text, string $taskId): void
     {
-        $this->comment = $comment;
+        $this->taskId = $taskId;
         $this->text = $text;
 
         $this->recordEvent(new CommentHasBeenUpdateEvent(
             $this->id->getId(),
-            $comment,
+            $taskId,
             $text
         ));
     }
@@ -68,7 +68,7 @@ class Comment implements EventRecordableInterface
     {
         $this->recordEvent(new CommentHasBeenDeletedEvent(
             $this->id->getId(),
-            $this->comment,
+            $this->taskId,
             $this->text
         ));
     }

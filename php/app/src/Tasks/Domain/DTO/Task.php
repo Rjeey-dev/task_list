@@ -18,34 +18,24 @@ class Task
     public $id;
 
     /**
-     * @Serializer\SerializedName("todo")
+     * @Serializer\SerializedName("name")
      * @Serializer\Type("string")
      * @Serializer\Groups({
      *     "tasks-list",
      *     "task-detail",
      * })
      */
-    public $todo;
+    public $name;
 
     /**
-     * @Serializer\SerializedName("doing")
+     * @Serializer\SerializedName("status")
      * @Serializer\Type("string")
      * @Serializer\Groups({
      *     "tasks-list",
      *     "task-detail",
      * })
      */
-    public $doing;
-
-    /**
-     * @Serializer\SerializedName("done")
-     * @Serializer\Type("string")
-     * @Serializer\Groups({
-     *     "tasks-list",
-     *     "task-detail",
-     * })
-     */
-    public $done;
+    public $status;
 
     /**
      * @Serializer\SerializedName("created")
@@ -57,12 +47,11 @@ class Task
      */
     public $created;
 
-    public function __construct(string $id, string $todo, string $doing, string $done, \DateTimeImmutable $created)
+    public function __construct(string $id, string $name, string $status, \DateTimeImmutable $created)
     {
         $this->id = $id;
-        $this->todo = $todo;
-        $this->doing = $doing;
-        $this->done = $done;
+        $this->name = $name;
+        $this->status = $status;
         $this->created = $created;
     }
 }

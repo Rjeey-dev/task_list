@@ -9,24 +9,23 @@ use NinjaBuggs\ServiceBus\Command\CommandInterface;
 class CreateCommentCommand implements CommandInterface
 {
     private $id;
-    private $comment;
     private $text;
+    private $taskId;
 
-    public function __construct(string $comment, string $text)
+    public function __construct(string $text, string $taskId)
     {
         $this->id = CommentId::generate();
-        $this->comment = $comment;
         $this->text = $text;
-    }
-
-    public function getComment(): string
-    {
-        return $this->comment;
+        $this->taskId = $taskId;
     }
 
     public function getText(): string
     {
         return $this->text;
+    }
+    public function getTaskId(): string
+    {
+        return $this->taskId;
     }
 
     public function getId(): CommentId

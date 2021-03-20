@@ -15,5 +15,4 @@ interface TasksRepositoryInterface
     public function get(TaskId $id): Task;
     public function add(Task $task): void;
     public function remove(Task $task): void;
-
 }

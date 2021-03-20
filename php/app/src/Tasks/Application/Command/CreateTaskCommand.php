@@ -9,31 +9,24 @@ use NinjaBuggs\ServiceBus\Command\CommandInterface;
 class CreateTaskCommand implements CommandInterface
 {
     private $id;
-    private $todo;
-    private $doing;
-    private $done;
+    private $name;
+    private $status;
 
-    public function __construct(string $todo, string $doing, string $done)
+    public function __construct(string $name, string $status)
     {
         $this->id = TaskId::generate();
-        $this->todo = $todo;
-        $this->doing = $doing;
-        $this->done = $done;
+        $this->name= $name;
+        $this->status = $status;
     }
 
-    public function getTodo(): string
+    public function getName(): string
     {
-        return $this->todo;
+        return $this->name;
     }
 
-    public function getDoing(): string
+    public function getStatus(): string
     {
-        return $this->doing;
-    }
-
-    public function getDone(): string
-    {
-        return $this->done;
+        return $this->status;
     }
 
     public function getId(): TaskId

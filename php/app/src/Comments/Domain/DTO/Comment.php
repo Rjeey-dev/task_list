@@ -18,14 +18,14 @@ class Comment
     public $id;
 
     /**
-     * @Serializer\SerializedName("comment")
+     * @Serializer\SerializedName("task_id")
      * @Serializer\Type("string")
      * @Serializer\Groups({
      *     "comments-list",
      *     "comment-detail",
      * })
      */
-    public $comment;
+    public $task_Id;
 
     /**
      * @Serializer\SerializedName("text")
@@ -47,10 +47,10 @@ class Comment
      */
     public $created;
 
-    public function __construct(string $id, string $comment, string $text, \DateTimeImmutable $created)
+    public function __construct(string $id, string $task_Id, string $text, \DateTimeImmutable $created)
     {
         $this->id = $id;
-        $this->comment = $comment;
+        $this->task_Id = $task_Id;
         $this->text = $text;
         $this->created = $created;
     }

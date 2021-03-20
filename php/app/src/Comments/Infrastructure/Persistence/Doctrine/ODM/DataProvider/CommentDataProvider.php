@@ -50,7 +50,7 @@ class CommentDataProvider extends DocumentRepository implements CommentDataProvi
     {
         return new Comment(
             $comment['_id'],
-            $comment['comment'],
+            $comment['task_id'],
             $comment['text'],
             \DateTimeImmutable::createFromMutable($comment['created']->toDateTime()),
         );
