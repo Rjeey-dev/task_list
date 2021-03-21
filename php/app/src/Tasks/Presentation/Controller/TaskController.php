@@ -66,7 +66,7 @@ class TaskController extends ApiController
         } catch (ValidationException $e) {
             return $this->buildFailResponse(ApiResponse::ERROR_VALIDATION_FAILED);
         } catch (\Throwable $e) {
-                return $this->buildFailResponse($e->getMessage());
+            return $this->buildFailResponse($e->getMessage());
         }
     }
 

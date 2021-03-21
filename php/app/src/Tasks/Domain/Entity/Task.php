@@ -50,7 +50,7 @@ class Task implements EventRecordableInterface
         $this->recordEvent(new TaskHasBeenCreatedEvent(
             $id->getId(),
             $name,
-            $status,
+            $status
         ));
     }
 
@@ -62,7 +62,7 @@ class Task implements EventRecordableInterface
         $this->recordEvent(new TaskHasBeenUpdateEvent(
             $this->id->getId(),
             $name,
-            $status,
+            $status
         ));
     }
 
@@ -71,7 +71,7 @@ class Task implements EventRecordableInterface
         $this->recordEvent(new TaskHasBeenDeletedEvent(
             $this->id->getId(),
             $this->name,
-            $this->status,
+            $this->status
         ));
     }
 }

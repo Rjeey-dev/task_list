@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace App\Tasks\Application\Command;
 
+use App\Tasks\Domain\Exception\ValidationException;
 use App\Tasks\Domain\ValueObject\TaskId;
 use NinjaBuggs\ServiceBus\Command\CommandInterface;
 
@@ -48,7 +49,7 @@ class UpdateTaskCommand implements CommandInterface
     private function validateStatus(int $status): void
     {
         if (!in_array($status, self::SUPPORTED_STATUSES, true)) {
-            throw new \App\Tasks\Domain\Exception\ValidationException('Status not valid');
+            throw new ValidationException('Status not valid');
         }
     }
 }
