@@ -20,7 +20,7 @@ class CreateCommentCommandHandler implements UseCaseInterface, TransactionalHand
 
     public function __invoke(CreateCommentCommand $command): void
     {
-        $comment = new Comment($command->getId(), $command->getComment(), $command->getText());
+        $comment = new Comment($command->getId(), $command->getText(), $command->getTaskId());
 
         $this->commentsRepository->add($comment);
     }

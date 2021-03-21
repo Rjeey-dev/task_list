@@ -21,7 +21,7 @@ class UpdateTaskCommandHandler implements UseCaseInterface, TransactionalHandler
     {
         $task = $this->tasksRepository->get($command->getId());
 
-        $task->update($command->getTodo(), $command->getDone(), $command->getDoing());
+        $task->update($command->getName(), $command->getStatus());
 
         $this->tasksRepository->add($task);
     }

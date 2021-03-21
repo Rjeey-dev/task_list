@@ -24,52 +24,45 @@ class Task implements EventRecordableInterface
     private $id;
 
     /**
-     * @MongoDB\Field(name="todo", type="string")
+     * @MongoDB\Field(name="name", type="string")
      */
-    private $todo;
+    private $name;
 
     /**
-     * @MongoDB\Field(type="string")
+     * @MongoDB\Field(name="status", type="int")
      */
-    private $doing;
+    private $status;
 
-    /**
-     * @MongoDB\Field(type="string")
-     */
-    private $done;
 
     /**
      * @MongoDB\Field(type="date_immutable")
      */
     private $created;
 
-    public function __construct(TaskId $id, string $todo, string $doing, string $done)
+    public function __construct(TaskId $id, string $name, int $status)
     {
         $this->id = $id;
-        $this->todo = $todo;
-        $this->doing = $doing;
-        $this->done = $done;
+        $this->name = $name;
+        $this->status = $status;
+
         $this->created = new \DateTimeImmutable();
 
         $this->recordEvent(new TaskHasBeenCreatedEvent(
             $id->getId(),
-            $todo,
-            $doing,
-            $done,
+            $name,
+            $status
         ));
     }
 
-    public function update(string $todo, string $doing, string $done): void
+    public function update(string $name, int $status): void
     {
-        $this->todo = $todo;
-        $this->doing = $doing;
-        $this->done = $done;
+        $this->name = $name;
+        $this->status = $status;
 
         $this->recordEvent(new TaskHasBeenUpdateEvent(
             $this->id->getId(),
-            $todo,
-            $doing,
-            $done,
+            $name,
+            $status
         ));
     }
 
@@ -77,10 +70,8 @@ class Task implements EventRecordableInterface
     {
         $this->recordEvent(new TaskHasBeenDeletedEvent(
             $this->id->getId(),
-            $this->todo,
-            $this->doing,
-            $this->done,
+            $this->name,
+            $this->status
         ));
     }
-
 }

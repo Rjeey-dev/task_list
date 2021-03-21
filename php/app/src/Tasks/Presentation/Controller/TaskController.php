@@ -53,9 +53,8 @@ class TaskController extends ApiController
             $data = json_decode($request->getContent(), true);
 
             $command = new CreateTaskCommand(
-                (string)$data['todo'],
-                (string)$data['doing'],
-                (string)$data['done'],
+                (string)$data['name'],
+                (int)$data['status'],
             );
 
             $this->commandBus->handle($command);
@@ -67,7 +66,7 @@ class TaskController extends ApiController
         } catch (ValidationException $e) {
             return $this->buildFailResponse(ApiResponse::ERROR_VALIDATION_FAILED);
         } catch (\Throwable $e) {
-                return $this->buildFailResponse($e->getMessage());
+            return $this->buildFailResponse($e->getMessage());
         }
     }
 
@@ -95,7 +94,7 @@ class TaskController extends ApiController
         try {
             $data = json_decode($request->getContent(), true);
 
-            $command = new UpdateTaskCommand($id, (string) $data['todo'], (string) $data['doing'], $data['done']);
+            $command = new UpdateTaskCommand($id, (string) $data['name'], (int) $data['status']);
 
             $this->commandBus->handle($command);
 

@@ -3,22 +3,32 @@ declare(strict_types=1);
 
 namespace App\Tasks\Application\Command;
 
+use App\Tasks\Domain\Exception\ValidationException;
 use App\Tasks\Domain\ValueObject\TaskId;
 use NinjaBuggs\ServiceBus\Command\CommandInterface;
 
 class UpdateTaskCommand implements CommandInterface
 {
-    private $id;
-    private $todo;
-    private $doing;
-    private $done;
+    private const STATUS_TODO = 0;
+    private const STATUS_DOING = 1;
+    private const STATUS_DONE = 2;
 
-    public function __construct(string $id, string $todo, string $doing, string $done)
+    private const SUPPORTED_STATUSES = [
+        self::STATUS_TODO,
+        self::STATUS_DOING,
+        self::STATUS_DONE,
+    ];
+
+    private $id;
+    private $name;
+    private $status;
+
+    public function __construct(string $id, string $name, int $status)
     {
         $this->id = new TaskId($id);
-        $this->todo = $todo;
-        $this->doing = $doing;
-        $this->done = $done;
+        $this->name = $name;
+        $this->status = $status;
+        $this->validateStatus($status);
     }
 
     public function getId(): TaskId
@@ -26,18 +36,20 @@ class UpdateTaskCommand implements CommandInterface
         return $this->id;
     }
 
-    public function getTodo(): string
+    public function getName(): string
     {
-        return $this->todo;
+        return $this->name;
     }
 
-    public function getDoing(): string
+    public function getStatus(): int
     {
-        return $this->doing;
+        return $this->status;
     }
 
-    public function getDone(): string
+    private function validateStatus(int $status): void
     {
-        return $this->done;
+        if (!in_array($status, self::SUPPORTED_STATUSES, true)) {
+            throw new ValidationException('Status not valid');
+        }
     }
 }

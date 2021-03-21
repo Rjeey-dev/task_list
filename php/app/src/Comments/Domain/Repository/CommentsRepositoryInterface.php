@@ -13,7 +13,6 @@ interface CommentsRepositoryInterface
      * @throws CommentNotFoundException
      */
     public function get(CommentId $id): Comment;
-    public function add(Comment $user): void;
-    public function remove(Comment $user): void;
-
+    public function add(Comment $comment): void;
+    public function remove(Comment $comment): void;
 }

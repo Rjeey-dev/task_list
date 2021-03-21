@@ -35,7 +35,7 @@ class CommentController extends ApiController
             return $this->buildSerializedListResponse(
                 $commentsList->getComments(),
                 $commentsList->getTotalCount(),
-                ['users-list']
+                ['comments-list']
             );
         } catch (ValidationException $e) {
             return $this->buildFailResponse(ApiResponse::ERROR_VALIDATION_FAILED);
@@ -54,7 +54,7 @@ class CommentController extends ApiController
 
             $command = new CreateCommentCommand(
                 (string)$data['text'],
-                (string)$data['comment']
+                (string)$data['task_id']
             );
 
             $this->commandBus->handle($command);
@@ -94,7 +94,7 @@ class CommentController extends ApiController
         try {
             $data = json_decode($request->getContent(), true);
 
-            $command = new UpdateCommentCommand($id, (string) $data['text'], (string) $data['comment']);
+            $command = new UpdateCommentCommand($id, (string) $data['text'], (string) $data['task_id']);
 
             $this->commandBus->handle($command);
 
