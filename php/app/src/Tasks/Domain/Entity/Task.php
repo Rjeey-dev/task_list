@@ -29,7 +29,7 @@ class Task implements EventRecordableInterface
     private $name;
 
     /**
-     * @MongoDB\Field(name="status", type="string")
+     * @MongoDB\Field(name="status", type="int")
      */
     private $status;
 
@@ -39,7 +39,7 @@ class Task implements EventRecordableInterface
      */
     private $created;
 
-    public function __construct(TaskId $id, string $name, string $status)
+    public function __construct(TaskId $id, string $name, int $status)
     {
         $this->id = $id;
         $this->name = $name;
@@ -54,7 +54,7 @@ class Task implements EventRecordableInterface
         ));
     }
 
-    public function update(string $name, string $status): void
+    public function update(string $name, int $status): void
     {
         $this->name = $name;
         $this->status = $status;

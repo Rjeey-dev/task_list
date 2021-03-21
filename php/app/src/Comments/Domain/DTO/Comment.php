@@ -25,7 +25,7 @@ class Comment
      *     "comment-detail",
      * })
      */
-    public $task_Id;
+    public $taskId;
 
     /**
      * @Serializer\SerializedName("text")
@@ -47,10 +47,10 @@ class Comment
      */
     public $created;
 
-    public function __construct(string $id, string $task_Id, string $text, \DateTimeImmutable $created)
+    public function __construct(string $id, string $taskId, string $text, \DateTimeImmutable $created)
     {
         $this->id = $id;
-        $this->task_Id = $task_Id;
+        $this->taskId = $taskId;
         $this->text = $text;
         $this->created = $created;
     }

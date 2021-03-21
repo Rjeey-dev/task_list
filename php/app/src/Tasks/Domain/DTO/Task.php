@@ -29,7 +29,7 @@ class Task
 
     /**
      * @Serializer\SerializedName("status")
-     * @Serializer\Type("string")
+     * @Serializer\Type("int")
      * @Serializer\Groups({
      *     "tasks-list",
      *     "task-detail",
@@ -47,7 +47,7 @@ class Task
      */
     public $created;
 
-    public function __construct(string $id, string $name, string $status, \DateTimeImmutable $created)
+    public function __construct(string $id, string $name, int $status, \DateTimeImmutable $created)
     {
         $this->id = $id;
         $this->name = $name;

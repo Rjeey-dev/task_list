@@ -51,7 +51,7 @@ class TaskDataProvider extends DocumentRepository implements TaskDataProviderInt
         return new Task(
             $task['_id'],
             $task['name'],
-            $task['status'],
+            (int)$task['status'],
             \DateTimeImmutable::createFromMutable($task['created']->toDateTime()),
         );
     }

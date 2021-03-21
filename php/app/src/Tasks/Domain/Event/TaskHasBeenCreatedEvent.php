@@ -11,7 +11,7 @@ class TaskHasBeenCreatedEvent implements EventInterface
     private $name;
     private $status;
 
-    public function __construct(string $id, string $name, string $status)
+    public function __construct(string $id, string $name, int $status)
     {
         $this->id = $id;
         $this->name = $name;
@@ -28,7 +28,7 @@ class TaskHasBeenCreatedEvent implements EventInterface
         return $this->name;
     }
 
-    public function getStatus(): string
+    public function getStatus(): int
     {
         return $this->status;
     }

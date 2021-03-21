@@ -54,7 +54,7 @@ class CommentController extends ApiController
 
             $command = new CreateCommentCommand(
                 (string)$data['text'],
-                (string)$data['taskId']
+                (string)$data['task_id']
             );
 
             $this->commandBus->handle($command);

@@ -23,6 +23,7 @@ class CreateCommentCommand implements CommandInterface
     {
         return $this->text;
     }
+
     public function getTaskId(): string
     {
         return $this->taskId;
