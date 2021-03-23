@@ -18,6 +18,10 @@ class Task implements EventRecordableInterface
 {
     use EventRecordableTrait;
 
+    private const STATUS_TODO = 0;
+    private const STATUS_DOING = 1;
+    private const STATUS_DONE = 2;
+
     /**
      * @MongoDB\Id(strategy="NONE", type="task:task_id")
      */
@@ -31,7 +35,7 @@ class Task implements EventRecordableInterface
     /**
      * @MongoDB\Field(name="status", type="int")
      */
-    private $status;
+    private $status = self::STATUS_TODO;
 
 
     /**
@@ -39,30 +43,33 @@ class Task implements EventRecordableInterface
      */
     private $created;
 
-    public function __construct(TaskId $id, string $name, int $status)
+    public function __construct(TaskId $id, string $name)
     {
         $this->id = $id;
         $this->name = $name;
-        $this->status = $status;
 
         $this->created = new \DateTimeImmutable();
 
         $this->recordEvent(new TaskHasBeenCreatedEvent(
             $id->getId(),
             $name,
-            $status
+            $this->status
         ));
     }
 
-    public function update(string $name, int $status): void
+    public function update(?string $name, ?int $status): void
     {
-        $this->name = $name;
-        $this->status = $status;
+        if (!$name && !$status) {
+            return;
+        }
+
+        $this->name = $name ?? $this->name;
+        $this->status = $status ?? $this->status;
 
         $this->recordEvent(new TaskHasBeenUpdateEvent(
             $this->id->getId(),
-            $name,
-            $status
+            $this->name,
+            $this->status
         ));
     }
 

@@ -27,6 +27,7 @@ class CommentController extends ApiController
         try {
             /** @var CommentsList $commentsList */
             $commentsList = $this->queryBus->handle(new FindCommentsQuery(
+                $request->query->get('task_id') !== null ? (string)$request->query->get('task_id') : null,
                 $request->query->get('offset') !== null ? (int)$request->query->get('offset') : null,
                 $request->query->get('limit') !== null ? (int)$request->query->get('limit') : null,
                 $request->query->get('order') !== null ? (string)$request->query->get('order') : null

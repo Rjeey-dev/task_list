@@ -27,7 +27,7 @@ class CommentDataProvider extends DocumentRepository implements CommentDataProvi
         return $this->createComment($comment);
     }
 
-    public function findComments(int $offset, int $limit, string $order): CommentsList
+    public function findComments(int $offset, int $limit, string $order, ?string $taskId): CommentsList
     {
         $commentsResult =[];
 
@@ -35,6 +35,10 @@ class CommentDataProvider extends DocumentRepository implements CommentDataProvi
         $query->skip($offset);
         $query->limit($limit);
         $query->sort('created', $order);
+
+        if ($taskId) {
+            $query->field('task_id')->equals($taskId);
+        }
 
         $query = $query->hydrate(false)
             ->getQuery();
