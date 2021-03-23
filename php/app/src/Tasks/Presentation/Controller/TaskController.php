@@ -53,8 +53,7 @@ class TaskController extends ApiController
             $data = json_decode($request->getContent(), true);
 
             $command = new CreateTaskCommand(
-                (string)$data['name'],
-                (int)$data['status'],
+                (string)$data['name']
             );
 
             $this->commandBus->handle($command);
@@ -94,7 +93,11 @@ class TaskController extends ApiController
         try {
             $data = json_decode($request->getContent(), true);
 
-            $command = new UpdateTaskCommand($id, (string) $data['name'], (int) $data['status']);
+            $command = new UpdateTaskCommand(
+                $id,
+                array_key_exists('name', $data) ? (string) $data['name'] : null,
+                array_key_exists('status', $data) ? (int) $data['status'] : null
+            );
 
             $this->commandBus->handle($command);
 

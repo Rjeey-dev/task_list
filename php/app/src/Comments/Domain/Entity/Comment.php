@@ -38,7 +38,7 @@ class Comment implements EventRecordableInterface
      */
     private $created;
 
-    public function __construct(CommentId $id, string $taskId, string $text)
+    public function __construct(CommentId $id, string $text, string $taskId)
     {
         $this->id = $id;
         $this->taskId = $taskId;

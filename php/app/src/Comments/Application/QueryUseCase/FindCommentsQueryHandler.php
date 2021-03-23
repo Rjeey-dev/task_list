@@ -19,6 +19,6 @@ class FindCommentsQueryHandler implements QueryUseCaseInterface
 
     public function __invoke(FindCommentsQuery $query): CommentsList
     {
-        return $this->commentsDataProvider->findComments($query->getOffset(), $query->getLimit(), $query->getOrder());
+        return $this->commentsDataProvider->findComments($query->getOffset(), $query->getLimit(), $query->getOrder(), $query->getTaskId());
     }
 }

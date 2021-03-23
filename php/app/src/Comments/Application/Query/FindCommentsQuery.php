@@ -22,11 +22,12 @@ class FindCommentsQuery implements QueryInterface
     private $offset;
     private $limit;
     private $order;
+    private $taskId;
 
     /**
      * @throws ValidationException
      */
-    public function __construct(?int $offset, ?int $limit, ?string $order)
+    public function __construct(?string $taskId, ?int $offset, ?int $limit, ?string $order)
     {
         $offset = $offset ?? self::DEFAULT_OFFSET;
         $limit = $limit ?? self::DEFAULT_LIMIT;
@@ -39,6 +40,7 @@ class FindCommentsQuery implements QueryInterface
         $this->offset = $offset;
         $this->limit = $limit;
         $this->order = $order;
+        $this->taskId = $taskId;
     }
 
     public function getOffset(): int
@@ -54,6 +56,11 @@ class FindCommentsQuery implements QueryInterface
     public function getOrder(): string
     {
         return $this->order;
+    }
+
+    public function getTaskId(): ?string
+    {
+        return $this->taskId;
     }
 
     /**
