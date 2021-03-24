@@ -23,12 +23,16 @@ class UpdateTaskCommand implements CommandInterface
     private $name;
     private $status;
 
-    public function __construct(string $id, string $name, int $status)
+    /**
+     * @throws ValidationException
+     */
+    public function __construct(string $id, ?string $name, ?int $status)
     {
+        $this->validateStatus($status);
+
         $this->id = new TaskId($id);
         $this->name = $name;
         $this->status = $status;
-        $this->validateStatus($status);
     }
 
     public function getId(): TaskId
@@ -36,18 +40,25 @@ class UpdateTaskCommand implements CommandInterface
         return $this->id;
     }
 
-    public function getName(): string
+    public function getName(): ?string
     {
         return $this->name;
     }
 
-    public function getStatus(): int
+    public function getStatus(): ?int
     {
         return $this->status;
     }
 
-    private function validateStatus(int $status): void
+    /**
+     * @throws ValidationException
+     */
+    private function validateStatus(?int $status): void
     {
+        if (!$status) {
+            return;
+        }
+
         if (!in_array($status, self::SUPPORTED_STATUSES, true)) {
             throw new ValidationException('Status not valid');
         }

@@ -20,7 +20,7 @@ class CreateTaskCommandHandler implements UseCaseInterface, TransactionalHandler
 
     public function __invoke(CreateTaskCommand $command): void
     {
-        $task = new Task($command->getId(), $command->getName(), $command->getStatus());
+        $task = new Task($command->getId(), $command->getName());
 
         $this->tasksRepository->add($task);
     }

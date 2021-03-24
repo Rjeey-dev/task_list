@@ -14,5 +14,5 @@ interface CommentDataProviderInterface
      * @throws CommentNotFoundException
      */
     public function findComment(CommentId $id): Comment;
-    public function findComments(int $offset, int $limit, string $order): CommentsList;
+    public function findComments(int $offset, int $limit, string $order, ?string $taskId): CommentsList;
 }
